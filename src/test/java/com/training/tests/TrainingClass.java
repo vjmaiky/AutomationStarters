@@ -14,22 +14,20 @@ public class TrainingClass {
 
     static AndroidDriver driver;
 
-    public static void main (String args[]) throws MalformedURLException {
-        System.out.println("Hello world");
-
+    public static void main(String args[]) throws MalformedURLException {
         /**
          * dependencies in order to communicate with your phone
          */
         DesiredCapabilities capabilities = new DesiredCapabilities();
-        capabilities.setCapability("deviceName", "Pixel2");
+        capabilities.setCapability("deviceName", "S10");
         capabilities.setCapability("automationName", "uiautomator2");
-        capabilities.setCapability("udid", "yourUDID");
+        capabilities.setCapability("udid", "");
         capabilities.setCapability("newCommandTimeout", "600");
         capabilities.setCapability("platformName", "android");
-        capabilities.setCapability("app", "/path/to/your/application.apk");
+        capabilities.setCapability("app", "/Users/Shared/Appium/yourApk.apk");
         capabilities.setCapability("platformVersion", "10");
-        capabilities.setCapability("appPackage", "com.your.app.package.id");
-        capabilities.setCapability("appActivity", "com.your.app.main.MainActivity");
+        capabilities.setCapability("appPackage", "");
+        capabilities.setCapability("appActivity", "");
 
 
         /**
@@ -44,16 +42,34 @@ public class TrainingClass {
          */
 
         //we need to add asserts
-        MobileElement pageTitle = (MobileElement) driver.findElement(By.id("resourceIdOfPageTitle"));
-        Assert.assertTrue("Title of our page was not the desired one", pageTitle.getText().equals("Create Account"));
+
+        MobileElement createAccBtn = (MobileElement) driver.findElement(By.id(""));
+        MobileElement loginBtn = (MobileElement) driver.findElement(By.id(""));
+        String createAccBtnName = createAccBtn.getText();
+        String loginBtnName = loginBtn.getText();
+
+        System.out.println("Assert to see if the name of create account button and login button are correct");
+        Assert.assertTrue("The name of create account button " + createAccBtnName + " was not correct", createAccBtnName.equals("CREATE ACCOUNT"));
+        Assert.assertTrue("The name of login button " + loginBtnName + " was not correct", loginBtnName.equals("LOG IN"));
 
 
-        MobileElement creatAccount = (MobileElement) driver.findElement(By.id("resourceIdOfCreateAccountBtn"));
-        creatAccount.click();
+        System.out.println("Click on create accoutn button");
+        createAccBtn.click();
 
+
+        MobileElement createAccPageTitle = (MobileElement) driver.findElement(By.id(""));
+        MobileElement emailAddresslabel = (MobileElement) driver.findElement(By.id(""));
+        MobileElement emailAddressDescription = (MobileElement) driver.findElement(By.id(""));
+
+
+        System.out.println("Verify that elements from create account page are displayed");
+        Assert.assertTrue(createAccPageTitle.isDisplayed());
+        Assert.assertTrue(emailAddresslabel.isDisplayed());
+        Assert.assertTrue(emailAddressDescription.isDisplayed());
 
         //we need to add asserts
-        MobileElement emailAddressInput = (MobileElement) driver.findElement(By.id("resourceIdOfEmailInputField"));
+        MobileElement emailAddressInput = (MobileElement) driver.findElement(By.id(""));
+        System.out.println("Sending keys to e-mail address input");
         emailAddressInput.sendKeys("test@gmail.com");
 
         //we need to add asserts
@@ -70,6 +86,7 @@ public class TrainingClass {
         /**
          * closing driver session
          */
+        System.out.println("Closing the driver");
         driver.quit();
 
     }
